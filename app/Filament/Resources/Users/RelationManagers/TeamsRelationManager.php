@@ -64,8 +64,8 @@ class TeamsRelationManager extends RelationManager
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('created_by')
-                    ->numeric()
+                TextColumn::make('owner.name')
+                    ->label('Created By')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

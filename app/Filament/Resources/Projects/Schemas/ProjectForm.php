@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Projects\Schemas;
 
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
@@ -13,20 +14,24 @@ class ProjectForm
     {
         return $schema
             ->components([
-                TextInput::make('team_id')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('user_id')
-                    ->required()
-                    ->numeric(),
+                Select::make('team_id')
+                    ->relationship('team', 'name')
+                    ->label('Team')
+                    ->required(),
+                Select::make('user_id')
+                    ->relationship('owner', 'name')
+                    ->label('Leader')
+                    ->required(),
                 TextInput::make('title')
+                    ->columnSpanFull()
                     ->required(),
                 Textarea::make('description')
                     ->default(null)
                     ->columnSpanFull(),
-                TextInput::make('status')
-                    ->required()
-                    ->default('pending'),
+                Select::make('status')
+                    ->options(['pending' => 'Pending', 'in_progress' => 'In progress', 'completed' => 'Completed'])
+                    ->default('pending')
+                    ->required(),
                 DatePicker::make('deadline'),
             ]);
     }

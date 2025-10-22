@@ -71,8 +71,8 @@ class ProjectsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('title')
             ->columns([
-                TextColumn::make('team_id')
-                    ->numeric()
+                TextColumn::make('team.name')
+                    ->label('Team')
                     ->sortable(),
                 TextColumn::make('title')
                     ->searchable(),

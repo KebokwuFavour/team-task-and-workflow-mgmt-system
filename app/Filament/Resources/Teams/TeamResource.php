@@ -5,10 +5,14 @@ namespace App\Filament\Resources\Teams;
 use App\Filament\Resources\Teams\Pages\ManageTeams;
 use App\Models\Team;
 use BackedEnum;
+use Filament\Actions\AttachAction;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\DetachAction;
+use Filament\Actions\DetachBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Resources\Resource;
@@ -34,9 +38,11 @@ class TeamResource extends Resource
                 Textarea::make('description')
                     ->default(null)
                     ->columnSpanFull(),
-                TextInput::make('created_by')
-                    ->required()
-                    ->numeric(),
+                Select::make('created_by')
+                    ->relationship('owner', 'name')
+                    ->label('Created By')
+                    ->searchable()
+                    ->required(),
             ]);
     }
 
@@ -47,8 +53,8 @@ class TeamResource extends Resource
             ->columns([
                 TextColumn::make('name')
                     ->searchable(),
-                TextColumn::make('created_by')
-                    ->numeric()
+                TextColumn::make('owner.name')
+                    ->label('Created By')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
@@ -81,7 +87,7 @@ class TeamResource extends Resource
             RelationManagers\UsersRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [

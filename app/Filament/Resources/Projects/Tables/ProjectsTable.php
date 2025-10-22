@@ -14,11 +14,11 @@ class ProjectsTable
     {
         return $table
             ->columns([
-                TextColumn::make('team_id')
-                    ->numeric()
+                TextColumn::make('team.name')
+                    ->label('Team')
                     ->sortable(),
-                TextColumn::make('user_id')
-                    ->numeric()
+                TextColumn::make('owner.name')
+                    ->label('Leader')
                     ->sortable(),
                 TextColumn::make('title')
                     ->searchable(),

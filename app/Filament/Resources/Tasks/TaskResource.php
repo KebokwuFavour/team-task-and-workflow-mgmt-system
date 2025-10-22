@@ -31,12 +31,14 @@ class TaskResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('project_id')
-                    ->required()
-                    ->numeric(),
-                TextInput::make('user_id')
-                    ->numeric()
-                    ->default(null),
+                Select::make('project_id')
+                    ->relationship('project', 'title')
+                    ->label('Project')
+                    ->required(),
+                Select::make('user_id')
+                    ->relationship('assignee', 'name')
+                    ->label('Assigned To')
+                    ->required(),
                 TextInput::make('title')
                     ->required(),
                 Textarea::make('description')
@@ -59,11 +61,11 @@ class TaskResource extends Resource
         return $table
             ->recordTitleAttribute('Tasks')
             ->columns([
-                TextColumn::make('project_id')
-                    ->numeric()
+                TextColumn::make('project.title')
+                    ->label('Project')
                     ->sortable(),
-                TextColumn::make('user_id')
-                    ->numeric()
+                TextColumn::make('assignee.name')
+                    ->label('Assigned To')
                     ->sortable(),
                 TextColumn::make('title')
                     ->searchable(),

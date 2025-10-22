@@ -80,8 +80,8 @@ class TasksRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('title')
             ->columns([
-                TextColumn::make('project_id')
-                    ->numeric()
+                TextColumn::make('project.title')
+                    ->label('Project')
                     ->sortable(),
                 TextColumn::make('title')
                     ->searchable(),
