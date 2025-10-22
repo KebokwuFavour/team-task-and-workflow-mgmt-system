@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**
@@ -44,5 +45,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Relationship with Team Model
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'team_user')->withTimestamps();
+    }
+
+    // Relationship with Project Model
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    // Relationship with Task Model
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
     }
 }
